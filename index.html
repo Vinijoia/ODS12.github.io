@@ -1,109 +1,1322 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ODS 12 no Comércio Alimentício</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ODS 12 — Consumo Responsável no Comércio Alimentício</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #2D7A4F;
+    --verde-claro: #4CAF7D;
+    --dourado: #D4A853;
+    --terra: #8B4513;
+    --creme: #F5F0E8;
+    --escuro: #1A2E1F;
+    --branco: #FDFAF5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--escuro);
+    color: var(--branco);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(45,122,79,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(212,168,83,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(45,122,79,0.25);
+    border: 1px solid rgba(76,175,125,0.4);
+    border-radius: 40px;
+    padding: 8px 20px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--verde-claro);
+    margin-bottom: 36px;
+    width: fit-content;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--verde-claro);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(44px, 5vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--dourado);
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgba(253,250,245,0.65);
+    max-width: 440px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+
+  .btn-primary {
+    background: var(--verde);
+    color: var(--branco);
+    border: none;
+    padding: 16px 36px;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.25s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--verde-claro); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--branco);
+    border: 1px solid rgba(253,250,245,0.3);
+    padding: 16px 36px;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.25s, transform 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--dourado); color: var(--dourado); transform: translateY(-2px); }
+
+  /* Hero right — visual */
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ods-orb {
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      var(--verde) 0%, #3a9b63 25%,
+      var(--dourado) 25%, #b8922e 50%,
+      var(--verde) 50%, #2D7A4F 75%,
+      #1e5435 75%, var(--verde) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: spin 30s linear infinite, fadeIn 1s ease both;
+    box-shadow: 0 0 80px rgba(45,122,79,0.4), 0 0 160px rgba(45,122,79,0.15);
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes fadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+  .ods-orb-inner {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: var(--escuro);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: spin 30s linear infinite reverse;
+    border: 3px solid rgba(45,122,79,0.3);
+  }
+
+  .ods-number {
+    font-family: 'Fraunces', serif;
+    font-size: 96px;
+    font-weight: 900;
+    color: var(--verde-claro);
+    line-height: 1;
+  }
+
+  .ods-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+
+  /* Floating leaves */
+  .leaf {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    opacity: 0.6;
+    animation: float 6s ease-in-out infinite;
+  }
+  .leaf:nth-child(1) { top: 15%; right: 20%; animation-delay: 0s; }
+  .leaf:nth-child(2) { top: 65%; right: 8%; animation-delay: -2s; }
+  .leaf:nth-child(3) { top: 40%; right: 35%; animation-delay: -4s; }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(15deg); }
+  }
+
+  .leaf-svg { width: 100%; height: 100%; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--verde);
+    padding: 24px 80px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    text-align: center;
+  }
+
+  .stat-item { }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--branco);
+  }
+
+  .stat-desc {
+    font-size: 12px;
+    color: rgba(253,250,245,0.75);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── SECTION ── */
+  section { padding: 100px 80px; }
+
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--verde-claro);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--verde-claro);
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 3.5vw, 52px);
+    font-weight: 900;
+    line-height: 1.08;
+    margin-bottom: 20px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--dourado);
+  }
+
+  /* ── VIDEOS ── */
+  .videos-section {
+    background: var(--escuro);
+    position: relative;
+  }
+
+  .videos-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--verde), transparent);
+  }
+
+  .videos-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 60px;
+  }
+
+  .videos-desc {
+    color: rgba(253,250,245,0.6);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .video-card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+
+  .video-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--verde);
+    box-shadow: 0 20px 60px rgba(45,122,79,0.25);
+  }
+
+  .video-card.featured {
+    grid-column: span 2;
+  }
+
+  .video-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-thumb-bg {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .video-thumb-bg.v1 { background: linear-gradient(135deg, #1a4a2e, #2D7A4F); }
+  .video-thumb-bg.v2 { background: linear-gradient(135deg, #3d2a0a, #8B4513); }
+  .video-thumb-bg.v3 { background: linear-gradient(135deg, #1a3040, #2d6080); }
+  .video-thumb-bg.v4 { background: linear-gradient(135deg, #2a1a40, #5d3a8a); }
+
+  .play-btn {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(253,250,245,0.15);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(253,250,245,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s, transform 0.25s;
+    position: relative;
+    z-index: 2;
+  }
+
+  .video-card:hover .play-btn {
+    background: var(--verde);
+    border-color: var(--verde);
+    transform: scale(1.1);
+  }
+
+  .play-icon {
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 18px solid white;
+    margin-left: 3px;
+  }
+
+  .video-thumb-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.03) 20px,
+      rgba(255,255,255,0.03) 21px
+    );
+  }
+
+  .video-duration {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .video-info {
+    padding: 18px 20px;
+  }
+
+  .video-category {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--verde-claro);
+    margin-bottom: 8px;
+  }
+
+  .video-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .video-desc {
+    font-size: 13px;
+    color: rgba(253,250,245,0.55);
+    line-height: 1.6;
+  }
+
+  /* ── ENCARTES ── */
+  .encartes-section {
+    background: rgba(255,255,255,0.02);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .encartes-section::after {
+    content: 'ODS12';
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'Fraunces', serif;
+    font-size: 160px;
+    font-weight: 900;
+    color: rgba(45,122,79,0.06);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .encartes-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .encartes-text .section-title { margin-bottom: 24px; }
+
+  .encartes-text p {
+    color: rgba(253,250,245,0.6);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .feature-list {
+    list-style: none;
+    margin: 32px 0 40px;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: rgba(253,250,245,0.8);
+  }
+
+  .feature-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(45,122,79,0.3);
+    border: 1px solid var(--verde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--verde-claro);
+    font-size: 12px;
+  }
+
+  .encartes-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .encarte-card {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .encarte-card:hover { transform: scale(1.03); }
+  .encarte-card:nth-child(1) { grid-row: span 2; }
+
+  .encarte-inner {
+    aspect-ratio: 3/4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .encarte-card:nth-child(1) .encarte-inner { aspect-ratio: 3/5; }
+  .encarte-card:nth-child(2) .encarte-inner,
+  .encarte-card:nth-child(3) .encarte-inner { aspect-ratio: 4/3; }
+
+  .e1 { background: linear-gradient(160deg, #1e5c3a 0%, #0d3321 100%); }
+  .e2 { background: linear-gradient(160deg, #6b3a12 0%, #3a1a06 100%); }
+  .e3 { background: linear-gradient(160deg, #1a3d5c 0%, #0d1e2e 100%); }
+  .e4 { background: linear-gradient(160deg, #3d2a10 0%, #1e1408 100%); }
+
+  .encarte-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-conic-gradient(rgba(255,255,255,0.03) 0% 25%, transparent 0% 50%);
+    background-size: 20px 20px;
+  }
+
+  .encarte-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .encarte-name {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    position: relative;
+    z-index: 2;
+    line-height: 1.3;
+  }
+
+  .encarte-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .encarte-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--verde);
+    color: white;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    z-index: 3;
+  }
+
+  /* ── PILARES ODS12 ── */
+  .pilares-section {
+    background: var(--escuro);
+    position: relative;
+  }
+
+  .pilares-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(45,122,79,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .pilares-intro {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 70px;
+  }
+
+  .pilares-intro p {
+    color: rgba(253,250,245,0.6);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .pilar-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 36px 28px;
+    transition: border-color 0.3s, background 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pilar-card:hover {
+    border-color: var(--verde);
+    background: rgba(45,122,79,0.08);
+    transform: translateY(-4px);
+  }
+
+  .pilar-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    font-family: 'Fraunces', serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: rgba(45,122,79,0.12);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .pilar-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .pilar-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--branco);
+  }
+
+  .pilar-desc {
+    font-size: 14px;
+    color: rgba(253,250,245,0.55);
+    line-height: 1.7;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--verde);
+    text-align: center;
+    padding: 100px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 30px,
+      rgba(0,0,0,0.04) 30px,
+      rgba(0,0,0,0.04) 31px
+    );
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(36px, 4vw, 60px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--dourado);
+  }
+
+  .cta-desc {
+    font-size: 16px;
+    color: rgba(253,250,245,0.8);
+    max-width: 500px;
+    margin: 0 auto 48px;
+    line-height: 1.75;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+
+  .btn-white {
+    background: var(--branco);
+    color: var(--verde);
+    border: none;
+    padding: 16px 40px;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--branco);
+    border: 2px solid rgba(253,250,245,0.5);
+    padding: 16px 40px;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--branco);
+    transform: translateY(-3px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0f1c13;
+    padding: 48px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-brand {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--verde-claro);
+  }
+
+  .footer-brand span { color: var(--dourado); }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: rgba(253,250,245,0.45);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--verde-claro); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(253,250,245,0.3);
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: #1a2e1f;
+    border: 1px solid rgba(45,122,79,0.4);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: rgba(253,250,245,0.5);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--branco); }
+
+  .modal-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .modal-desc {
+    color: rgba(253,250,245,0.6);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(253,250,245,0.5);
+    margin-bottom: 8px;
+  }
+
+  .form-group input, .form-group select {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 13px 16px;
+    color: var(--branco);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--verde);
+  }
+
+  .form-group select option { background: #1a2e1f; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 60px 32px 40px; }
+    .hero-right { padding: 0 32px 60px; }
+    .ods-orb { width: 260px; height: 260px; }
+    .ods-orb-inner { width: 190px; height: 190px; }
+    .ods-number { font-size: 66px; }
+    .stats-bar { grid-template-columns: repeat(2,1fr); padding: 24px 32px; }
+    section { padding: 70px 32px; }
+    .videos-header { grid-template-columns: 1fr; gap: 20px; }
+    .videos-grid { grid-template-columns: 1fr; }
+    .video-card.featured { grid-column: span 1; }
+    .encartes-layout { grid-template-columns: 1fr; }
+    .pilares-grid { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
 </head>
 <body>
-  <header class="hero">
-    <div class="container">
-      <h1>ODS 12 no Comércio Alimentício</h1>
-      <p>Boas práticas para reduzir desperdícios, melhorar resultados e promover consumo responsável.</p>
-      <div class="buttons">
-        <a href="#video" class="btn">Assistir Vídeo</a>
-        <a href="#materiais" class="btn secondary">Ver Materiais</a>
+
+<!-- ───── HERO ───── -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      ODS 12 · Agenda 2030 · ONU
+    </div>
+    <h1 class="hero-title">
+      Consumo &<br><em>Produção</em><br>Responsáveis
+    </h1>
+    <p class="hero-desc">
+      Acesse vídeos educativos e encartes prontos para sensibilizar 
+      trabalhadores e gestores do comércio alimentício sobre as metas 
+      do ODS 12 — da loja ao prato, do desperdício à consciência.
+    </p>
+    <div class="hero-ctas">
+      <a href="#videos" class="btn-primary">
+        ▶ Assistir Vídeos
+      </a>
+      <a href="#encartes" class="btn-outline">
+        ↓ Ver Encartes
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <!-- Floating leaves -->
+    <svg class="leaf" style="top:12%;right:22%"><use/></svg>
+    <svg class="leaf" viewBox="0 0 40 40" style="top:12%;right:22%" fill="none">
+      <path d="M20 5 C30 5 38 15 35 28 C28 35 10 32 5 20 C5 10 12 5 20 5Z" fill="rgba(76,175,125,0.5)"/>
+      <line x1="20" y1="5" x2="15" y2="35" stroke="rgba(76,175,125,0.3)" stroke-width="1"/>
+    </svg>
+    <svg class="leaf" viewBox="0 0 40 40" style="top:65%;right:8%;animation-delay:-2s" fill="none">
+      <path d="M20 5 C30 5 38 15 35 28 C28 35 10 32 5 20 C5 10 12 5 20 5Z" fill="rgba(212,168,83,0.4)"/>
+    </svg>
+    <svg class="leaf" viewBox="0 0 40 40" style="top:40%;right:34%;animation-delay:-4s" fill="none">
+      <path d="M20 5 C30 5 38 15 35 28 C28 35 10 32 5 20 C5 10 12 5 20 5Z" fill="rgba(76,175,125,0.35)"/>
+    </svg>
+
+    <div class="ods-orb">
+      <div class="ods-orb-inner">
+        <span class="ods-number">12</span>
+        <span class="ods-label">Consumo Responsável</span>
       </div>
     </div>
-  </header>
+  </div>
+</section>
 
-  <section class="section">
-    <div class="container">
-      <h2>O que é a ODS 12?</h2>
+<!-- ───── STATS ───── -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">1/3</div>
+    <div class="stat-desc">dos alimentos no mundo são desperdiçados</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">931 mi</div>
+    <div class="stat-desc">toneladas de comida descartadas por ano</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">46 mi</div>
+    <div class="stat-desc">toneladas de resíduos alimentares no Brasil</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">12 Metas</div>
+    <div class="stat-desc">globais do ODS 12 para um futuro sustentável</div>
+  </div>
+</div>
+
+<!-- ───── VÍDEOS ───── -->
+<section class="videos-section" id="videos">
+  <div class="videos-header">
+    <div>
+      <div class="section-tag">Conteúdo em vídeo</div>
+      <h2 class="section-title">Vídeos para <em>Capacitar</em> sua Equipe</h2>
+    </div>
+    <div class="videos-desc">
+      Materiais audiovisuais prontos para exibição em treinamentos, reuniões 
+      de DDS e painéis de segurança. Linguagem acessível para todos os 
+      níveis da operação — do estoquista ao gerente.
+    </div>
+  </div>
+
+  <div class="videos-grid">
+    <!-- Featured -->
+    <div class="video-card featured" onclick="openModal('video')">
+      <div class="video-thumb">
+        <div class="video-thumb-bg v1">
+          <div class="video-thumb-pattern"></div>
+          <div class="play-btn">
+            <div class="play-icon"></div>
+          </div>
+        </div>
+        <span class="video-duration">12:34</span>
+      </div>
+      <div class="video-info">
+        <div class="video-category">Introdução ao ODS 12</div>
+        <div class="video-title">O que é o ODS 12 e por que o comércio alimentício importa?</div>
+        <div class="video-desc">Panorama completo das 12 metas do objetivo, com exemplos práticos do setor de alimentos: supermercados, restaurantes, padarias e distribuidoras.</div>
+      </div>
+    </div>
+
+    <!-- Small cards -->
+    <div class="video-card" onclick="openModal('video')">
+      <div class="video-thumb">
+        <div class="video-thumb-bg v2">
+          <div class="video-thumb-pattern"></div>
+          <div class="play-btn"><div class="play-icon"></div></div>
+        </div>
+        <span class="video-duration">7:18</span>
+      </div>
+      <div class="video-info">
+        <div class="video-category">Desperdício de Alimentos</div>
+        <div class="video-title">Como reduzir perdas no estoque e na exposição</div>
+        <div class="video-desc">Técnicas de FIFO, controle de validade e reaproveitamento.</div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('video')">
+      <div class="video-thumb">
+        <div class="video-thumb-bg v3">
+          <div class="video-thumb-pattern"></div>
+          <div class="play-btn"><div class="play-icon"></div></div>
+        </div>
+        <span class="video-duration">9:05</span>
+      </div>
+      <div class="video-info">
+        <div class="video-category">Embalagens Sustentáveis</div>
+        <div class="video-title">Alternativas ao plástico no ponto de venda</div>
+        <div class="video-desc">Materiais biodegradáveis, rotulagem ambiental e escolhas do consumidor.</div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('video')">
+      <div class="video-thumb">
+        <div class="video-thumb-bg v4">
+          <div class="video-thumb-pattern"></div>
+          <div class="play-btn"><div class="play-icon"></div></div>
+        </div>
+        <span class="video-duration">5:50</span>
+      </div>
+      <div class="video-info">
+        <div class="video-category">Gestão de Resíduos</div>
+        <div class="video-title">Coleta seletiva e logística reversa no comércio</div>
+        <div class="video-desc">Passo a passo para implantação de um programa de resíduos.</div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('video')">
+      <div class="video-thumb">
+        <div class="video-thumb-bg v1">
+          <div class="video-thumb-pattern"></div>
+          <div class="play-btn"><div class="play-icon"></div></div>
+        </div>
+        <span class="video-duration">6:42</span>
+      </div>
+      <div class="video-info">
+        <div class="video-category">Fornecedores Sustentáveis</div>
+        <div class="video-title">Como escolher parceiros alinhados ao ODS 12</div>
+        <div class="video-desc">Critérios de seleção, certificações e cadeia de fornecimento responsável.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── ENCARTES ───── -->
+<section class="encartes-section" id="encartes">
+  <div class="encartes-layout">
+    <div class="encartes-text">
+      <div class="section-tag">Material impresso & digital</div>
+      <h2 class="section-title">Encartes para <em>Afixar</em> e Compartilhar</h2>
       <p>
-        A ODS 12 promove padrões responsáveis de produção e consumo.
-        No ramo alimentício, isso significa reduzir desperdícios, melhorar processos
-        e incentivar práticas sustentáveis.
+        Artes prontas em alta resolução para impressão em quadros de avisos, 
+        murais, refeitórios e áreas de circulação — ou envio pelo WhatsApp 
+        da equipe.
       </p>
+      <ul class="feature-list">
+        <li>
+          <span class="feature-icon">✓</span>
+          Formato A3 e A4 em PDF, JPEG e PNG
+        </li>
+        <li>
+          <span class="feature-icon">✓</span>
+          Versões editáveis com logo da sua empresa
+        </li>
+        <li>
+          <span class="feature-icon">✓</span>
+          Linguagem visual acessível e pictogramas
+        </li>
+        <li>
+          <span class="feature-icon">✓</span>
+          Série temática: desperdício, embalagem, resíduos e compra consciente
+        </li>
+        <li>
+          <span class="feature-icon">✓</span>
+          Adequados à NR-12, NR-1 e práticas de SMS
+        </li>
+      </ul>
+      <a href="#" class="btn-primary" onclick="openModal('encarte'); return false;">
+        ↓ Baixar Encartes Grátis
+      </a>
     </div>
-  </section>
 
-  <section class="section cards">
-    <div class="container">
-      <h2>Boas Práticas no Comércio Alimentício</h2>
-
-      <div class="card-grid">
-        <div class="card">
-          <h3>Controle de Estoque</h3>
-          <p>Evite perdas e vencimentos com organização e monitoramento.</p>
+    <div class="encartes-gallery">
+      <div class="encarte-card" onclick="openModal('encarte')">
+        <div class="encarte-inner e1">
+          <span class="encarte-badge">Destaque</span>
+          <div class="encarte-icon">🌱</div>
+          <div class="encarte-name">Menos Desperdício,<br>Mais Futuro</div>
+          <div class="encarte-sub">Série ODS 12 · Vol. 1</div>
         </div>
-
-        <div class="card">
-          <h3>Redução do Desperdício</h3>
-          <p>Planeje melhor compras, armazenamento e reaproveitamento.</p>
+      </div>
+      <div class="encarte-card" onclick="openModal('encarte')">
+        <div class="encarte-inner e2">
+          <div class="encarte-icon">♻️</div>
+          <div class="encarte-name">Descarte Correto</div>
+          <div class="encarte-sub">Série ODS 12 · Vol. 2</div>
         </div>
-
-        <div class="card">
-          <h3>Descarte Correto</h3>
-          <p>Separe resíduos e descarte óleo e materiais corretamente.</p>
-        </div>
-
-        <div class="card">
-          <h3>Uso Consciente de Recursos</h3>
-          <p>Economize água, energia e recursos operacionais.</p>
-        </div>
-
-        <div class="card">
-          <h3>Educação e Conscientização</h3>
-          <p>Treine equipes e incentive clientes a práticas sustentáveis.</p>
+      </div>
+      <div class="encarte-card" onclick="openModal('encarte')">
+        <div class="encarte-inner e3">
+          <div class="encarte-icon">🛒</div>
+          <div class="encarte-name">Compra Consciente</div>
+          <div class="encarte-sub">Série ODS 12 · Vol. 3</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="video" class="section dark">
-    <div class="container">
-      <h2>Vídeo Educativo</h2>
-      <p>Substitua o link abaixo pelo vídeo do seu trabalho no YouTube.</p>
+<!-- ───── PILARES ───── -->
+<section class="pilares-section">
+  <div class="pilares-intro">
+    <div class="section-tag" style="justify-content:center;margin-bottom:16px">Por que isso importa</div>
+    <h2 class="section-title" style="text-align:center">Os <em>4 Pilares</em> do ODS 12<br>no Comércio Alimentício</h2>
+    <p>Ações concretas que sua empresa pode começar hoje, alinhadas às metas da Agenda 2030.</p>
+  </div>
 
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="Vídeo ODS12"
-          allowfullscreen>
-        </iframe>
-      </div>
+  <div class="pilares-grid">
+    <div class="pilar-card" data-num="01">
+      <span class="pilar-icon">🍽️</span>
+      <div class="pilar-title">Redução do Desperdício</div>
+      <div class="pilar-desc">Meta 12.3 da ONU: reduzir à metade o desperdício de alimentos per capita até 2030. Controle de estoque, datas de validade e doação de excedentes.</div>
     </div>
-  </section>
-
-  <section id="materiais" class="section">
-    <div class="container">
-      <h2>Materiais Educativos</h2>
-      <div class="materials">
-        <a href="pdfs/cartilha_ods12.pdf" target="_blank" class="material-btn">Cartilha ODS12</a>
-        <a href="pdfs/guia_boas_praticas.pdf" target="_blank" class="material-btn">Guia de Boas Práticas</a>
-        <a href="pdfs/checklist_desperdicio.pdf" target="_blank" class="material-btn">Checklist de Desperdício</a>
-      </div>
+    <div class="pilar-card" data-num="02">
+      <span class="pilar-icon">📦</span>
+      <div class="pilar-title">Embalagens Responsáveis</div>
+      <div class="pilar-desc">Meta 12.4: gestão ambientalmente adequada de produtos químicos e resíduos. Substituição do plástico de uso único e rotulagem ambiental.</div>
     </div>
-  </section>
-
-  <section class="section impact">
-    <div class="container">
-      <h2>Impacto das Boas Práticas</h2>
-      <div class="impact-grid">
-        <div>♻️ Menos desperdício</div>
-        <div>💰 Economia financeira</div>
-        <div>🌎 Menor impacto ambiental</div>
-        <div>🍽️ Consumo responsável</div>
-      </div>
+    <div class="pilar-card" data-num="03">
+      <span class="pilar-icon">🔗</span>
+      <div class="pilar-title">Cadeia de Fornecimento</div>
+      <div class="pilar-desc">Meta 12.6: empresas adotando práticas sustentáveis e divulgando informações. Seleção de fornecedores com critérios socioambientais.</div>
     </div>
-  </section>
+    <div class="pilar-card" data-num="04">
+      <span class="pilar-icon">📚</span>
+      <div class="pilar-title">Educação e Informação</div>
+      <div class="pilar-desc">Meta 12.8: garantir que as pessoas tenham informação para o desenvolvimento sustentável. Treinamentos, DDS temáticos e comunicação interna.</div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    <p>Sustentabilidade no ramo alimentício começa com pequenas atitudes.</p>
-  </footer>
+<!-- ───── CTA ───── -->
+<section class="cta-section">
+  <h2 class="cta-title">Pronto para <em>transformar</em><br>seu comércio?</h2>
+  <p class="cta-desc">
+    Baixe os materiais gratuitamente e comece hoje mesmo a 
+    capacitar sua equipe com conteúdo alinhado ao ODS 12 e 
+    às exigências de sustentabilidade do setor alimentício.
+  </p>
+  <div class="cta-actions">
+    <a href="#" class="btn-white" onclick="openModal('encarte'); return false;">
+      ↓ Baixar Kit Completo
+    </a>
+    <a href="#videos" class="btn-ghost">
+      ▶ Assistir Vídeos
+    </a>
+  </div>
+</section>
 
-  <script src="script.js"></script>
+<!-- ───── FOOTER ───── -->
+<footer>
+  <div class="footer-brand">ODS<span>12</span> · Comércio Alimentício</div>
+  <ul class="footer-links">
+    <li><a href="#videos">Vídeos</a></li>
+    <li><a href="#encartes">Encartes</a></li>
+    <li><a href="https://sdgs.un.org/goals/goal12" target="_blank">ONU · ODS 12</a></li>
+    <li><a href="#">Contato</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 · Agenda 2030 Brasil</div>
+</footer>
+
+<!-- ───── MODAL ───── -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+  const modalTemplates = {
+    video: `
+      <div class="modal-title">📹 Acessar Vídeos ODS 12</div>
+      <div class="modal-desc">Informe seus dados para receber o link de acesso completo à biblioteca de vídeos educativos sobre o ODS 12 no comércio alimentício.</div>
+      <div class="form-group">
+        <label>Nome completo</label>
+        <input type="text" placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label>E-mail corporativo</label>
+        <input type="email" placeholder="email@suaempresa.com.br">
+      </div>
+      <div class="form-group">
+        <label>Segmento da empresa</label>
+        <select>
+          <option value="">Selecione...</option>
+          <option>Supermercado / Hipermercado</option>
+          <option>Restaurante / Food Service</option>
+          <option>Padaria / Confeitaria</option>
+          <option>Distribuidora de Alimentos</option>
+          <option>Atacadista</option>
+          <option>Outro</option>
+        </select>
+      </div>
+      <button class="btn-primary" style="width:100%;justify-content:center;padding:16px" onclick="successModal()">
+        Quero Acessar os Vídeos →
+      </button>
+    `,
+    encarte: `
+      <div class="modal-title">📄 Baixar Kit de Encartes</div>
+      <div class="modal-desc">Preencha rapidamente e receba os encartes prontos (PDF + PNG) em seu e-mail. Formatos A3, A4 e versão para WhatsApp.</div>
+      <div class="form-group">
+        <label>Nome completo</label>
+        <input type="text" placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label>E-mail para envio</label>
+        <input type="email" placeholder="email@suaempresa.com.br">
+      </div>
+      <div class="form-group">
+        <label>Número de funcionários</label>
+        <select>
+          <option value="">Selecione...</option>
+          <option>1 a 10</option>
+          <option>11 a 50</option>
+          <option>51 a 200</option>
+          <option>Mais de 200</option>
+        </select>
+      </div>
+      <button class="btn-primary" style="width:100%;justify-content:center;padding:16px" onclick="successModal()">
+        Enviar Kit para meu E-mail →
+      </button>
+    `,
+    success: `
+      <div style="text-align:center;padding:20px 0">
+        <div style="font-size:56px;margin-bottom:20px">✅</div>
+        <div class="modal-title" style="margin-bottom:12px">Material enviado!</div>
+        <div class="modal-desc">Verifique sua caixa de entrada. Se não encontrar em alguns minutos, cheque a pasta de spam.</div>
+        <button class="btn-primary" style="margin-top:24px" onclick="closeModal()">Fechar</button>
+      </div>
+    `
+  };
+
+  function openModal(type) {
+    document.getElementById('modal-content').innerHTML = modalTemplates[type];
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  function successModal() {
+    document.getElementById('modal-content').innerHTML = modalTemplates.success;
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.video-card, .pilar-card, .encarte-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
 </body>
 </html>
